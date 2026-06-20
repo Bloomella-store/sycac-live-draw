@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SYCAC Live Draw | السحب المباشر</title>
+<style>
+:root{
+  --blue:#3a66ae;
+  --purple:#66358e;
+  --red:#f04b38;
+  --green:#0f6e3a;
+  --dark:#454244;
+  --bg:#f7f8fb;
+  --card:#ffffff;
+  --muted:#64748b;
+  --line:#e5e7eb;
+  --soft:#f8fafc;
+  --shadow:0 22px 55px rgba(15,23,42,.13);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 10% 8%, rgba(58,102,174,.10), transparent 28%),
+    radial-gradient(circle at 92% 18%, rgba(240,75,56,.10), transparent 28%),
+    radial-gradient(circle at 70% 95%, rgba(15,110,58,.10), transparent 30%),
+    var(--bg);
+  font-family:"Segoe UI", Tahoma, Arial, sans-serif;
+  color:#111827;
+  overflow-x:hidden;
+}
+.app{
+  min-height:100%;
+  display:grid;
+  grid-template-columns:440px minmax(0,1fr);
+  gap:18px;
+  padding:18px;
+}
+.panel,.stage{
+  background:rgba(255,255,255,.95);
+  backdrop-filter: blur(10px);
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:30px;
+  box-shadow:var(--shadow);
+}
+.panel{
+  padding:18px;
+  overflow:auto;
+  max-height:calc(100vh - 36px);
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding-bottom:12px;
+}
+.logo{width:78px;height:78px;object-fit:contain}
+.brand h1{
+  font-size:23px;
+  margin:0;
+  color:var(--dark);
+  line-height:1.25;
+}
+.brand small{color:var(--muted);direction:ltr;display:block;margin-top:3px}
+.colorbar{
+  height:6px;
+  border-radius:99px;
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--red),var(--green));
+  margin:8px 0 18px;
+}
+.section{
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:15px;
+  margin:14px 0;
+  background:#fff;
+}
+.sectionHead{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin-bottom:12px;
+}
+.stepNo{
+  min-width:32px;
+  height:32px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  color:#fff;
+  font-weight:950;
+  direction:ltr;
+}
+.sectionTitle{
+  flex:1;
+}
+.sectionTitle h2{
+  font-size:16px;
+  margin:0;
+  color:var(--dark);
+}
+.sectionTitle .tr{
+  direction:ltr;
+  text-align:left;
+  color:#64748b;
+  font-size:13px;
+  margin-top:2px;
+  font-weight:700;
+}
+.tr{direction:ltr;text-align:left}
+.bi{
+  display:grid;
+  gap:2px;
+  line-height:1.45;
+}
+.bi .ar{direction:rtl;text-align:right}
+.bi .tr{direction:ltr;text-align:left;color:#64748b;font-size:.92em}
+label{
+  display:block;
+  font-size:13px;
+  color:#334155;
+  margin:10px 0 6px;
+  font-weight:850;
+}
+label .tr{
+  display:block;
+  color:#64748b;
+  font-size:12px;
+  font-weight:700;
+  margin-top:2px;
+}
+input,select,textarea,button{font:inherit}
+input[type=file],select,textarea,input[type=text],input[type=number]{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px 13px;
+  background:#fff;
+  outline:none;
+}
+input[type=number]{direction:ltr;text-align:center}
+textarea{min-height:80px;resize:vertical;direction:ltr;text-align:left}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btns{display:grid;gap:10px;margin-top:12px}
+button{
+  border:0;
+  border-radius:16px;
+  padding:13px 15px;
+  font-weight:950;
+  cursor:pointer;
+  transition:.15s transform,.15s opacity,.15s filter;
+}
+button:hover{transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.primary{background:var(--blue);color:#fff}
+.green{background:var(--green);color:#fff}
+.red{background:var(--red);color:#fff}
+.purple{background:var(--purple);color:#fff}
+.dark{background:var(--dark);color:#fff}
+.light{background:#eef2ff;color:#1e3a8a}
+.ghost{background:#fff;border:1px solid var(--line);color:#111827}
+.help{
+  background:var(--soft);
+  border:1px solid #e2e8f0;
+  color:#334155;
+  padding:11px;
+  border-radius:14px;
+  font-size:13px;
+  line-height:1.65;
+}
+.success{background:#ecfdf5;border-color:#bbf7d0;color:#166534}
+.warn{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.stat{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:18px;
+  padding:12px;
+  min-height:84px;
+}
+.stat b{display:block;font-size:25px;color:var(--blue)}
+.stat span{font-size:12px;color:var(--muted);display:block;line-height:1.45}
+.preview{
+  max-height:170px;
+  overflow:auto;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  margin-top:10px;
+}
+.preview table{width:100%;border-collapse:collapse;font-size:12px;direction:ltr;text-align:left}
+.preview th,.preview td{border-bottom:1px solid #eef2f7;padding:8px;white-space:nowrap}
+.preview th{position:sticky;top:0;background:#f8fafc}
+.winnersList{max-height:180px;overflow:auto;display:grid;gap:8px}
+.winnerItem{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:14px;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+.winnerItem .no{color:var(--blue);font-weight:950}
+.winnerItem .meta{color:var(--muted);font-size:12px;direction:ltr}
+
+/* Stage */
+.stage{
+  position:relative;
+  min-height:calc(100vh - 36px);
+  overflow:hidden;
+  padding:28px;
+  display:flex;
+  flex-direction:column;
+}
+.stage:before{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(58,102,174,.15), transparent 23%),
+    radial-gradient(circle at 82% 32%, rgba(240,75,56,.13), transparent 22%),
+    radial-gradient(circle at 20% 80%, rgba(15,110,58,.14), transparent 24%);
+  pointer-events:none;
+}
+.stageTop,.stageMiddle,.stageBottom{position:relative;z-index:1}
+.stageTop{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.stageBrand{display:flex;align-items:center;gap:16px}
+.stageBrand img{width:112px;height:112px;object-fit:contain}
+.stageTitle h1{margin:0;font-size:36px;color:var(--dark);line-height:1.2}
+.stageTitle p.trTitle{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:36px;
+  font-weight:800;
+  line-height:1.2;
+  direction:ltr;
+  text-align:left;
+}
+
+.badge{
+  border-radius:999px;
+  padding:10px 16px;
+  background:#fff;
+  border:1px solid var(--line);
+  color:#334155;
+  font-weight:950;
+  min-width:160px;
+  text-align:center;
+}
+.stageMiddle{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px 0;
+}
+.drawLabel{font-size:24px;color:var(--muted);margin-bottom:16px}
+.drawLabel .tr{font-size:18px;text-align:center;color:#64748b;margin-top:4px}
+.wheelArea{
+  width:min(100%,1120px);
+  position:relative;
+  padding:22px 0;
+}
+
+/* Hidden helper from previous version; names are no longer shown in the background */
+.rouletteBack{
+  display:none;
+}
+
+.nameBox{
+  width:100%;
+  height:230px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:44px;
+  background:
+    linear-gradient(rgba(255,255,255,.97),rgba(255,255,255,.97)) padding-box,
+    linear-gradient(120deg,var(--blue),var(--purple),var(--red),var(--green)) border-box;
+  border:9px solid transparent;
+  box-shadow:0 28px 75px rgba(15,23,42,.20);
+  padding:0 46px;
+  position:relative;
+  overflow:hidden;
+  z-index:2;
+}
+
+.nameBox:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,.96), transparent 24%, transparent 76%, rgba(255,255,255,.96)),
+    radial-gradient(circle at 50% 50%, transparent 45%, rgba(58,102,174,.06));
+  z-index:4;
+  pointer-events:none;
+}
+
+.nameBox:after{
+  content:"";
+  position:absolute;
+  left:28px;
+  right:28px;
+  top:50%;
+  height:86px;
+  transform:translateY(-50%);
+  border-top:2px solid rgba(58,102,174,.22);
+  border-bottom:2px solid rgba(240,75,56,.22);
+  border-radius:24px;
+  z-index:4;
+  pointer-events:none;
+}
+
+.wheelViewport{
+  width:100%;
+  height:230px;
+  overflow:hidden;
+  position:relative;
+  z-index:3;
+  mask-image:linear-gradient(transparent 0%, #000 18%, #000 82%, transparent 100%);
+  -webkit-mask-image:linear-gradient(transparent 0%, #000 18%, #000 82%, transparent 100%);
+}
+
+.wheelStrip{
+  transform:translateY(0);
+  will-change:transform;
+  padding-top:72px;
+  padding-bottom:72px;
+}
+
+.wheelItem{
+  height:86px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:clamp(38px,6vw,86px);
+  font-weight:950;
+  line-height:1.08;
+  color:#111827;
+  padding:0 22px;
+  word-break:break-word;
+  opacity:.32;
+  transform:scale(.78);
+  transition:opacity .12s, transform .12s;
+}
+
+.wheelItem.focus{
+  opacity:1;
+  transform:scale(1);
+}
+
+.wheelItem:nth-child(5n+1){color:var(--blue)}
+.wheelItem:nth-child(5n+2){color:var(--purple)}
+.wheelItem:nth-child(5n+3){color:var(--red)}
+.wheelItem:nth-child(5n+4){color:var(--green)}
+
+.winnerName{
+  display:none;
+}
+.subInfo{margin-top:18px;font-size:22px;color:var(--muted);min-height:32px;direction:ltr}
+.progressWrap{
+  width:min(100%,760px);
+  height:12px;
+  border-radius:999px;
+  background:#e5e7eb;
+  overflow:hidden;
+  margin-top:18px;
+  display:none;
+}
+.progressBar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--red),var(--green));
+  border-radius:999px;
+}
+.spinning .progressWrap{display:block}
+.stageControls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.stageControls button{min-width:215px;font-size:18px}
+.stageBottom{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.footerStat{
+  background:rgba(255,255,255,.92);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:16px;
+  text-align:center;
+}
+.footerStat b{display:block;font-size:34px;color:var(--purple)}
+.footerStat span{color:var(--muted);font-size:13px;line-height:1.45;display:block}
+.confetti{
+  position:fixed;
+  width:10px;
+  height:18px;
+  top:-30px;
+  z-index:999;
+  opacity:.95;
+  animation:fall 2.8s linear forwards;
+}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+body.presentation .panel{display:none}
+body.presentation .app{grid-template-columns:1fr;padding:0}
+body.presentation .stage{min-height:100vh;border-radius:0}
+body.presentation .stageBrand img{width:132px;height:132px}
+body.presentation .stageTitle h1{font-size:48px}
+body.presentation .stageTitle p.trTitle{
+  font-size:48px;
+}
+body.presentation .winnerName{font-size:clamp(70px,8vw,132px)}
+body.presentation .stageControls button{font-size:22px;min-width:260px}
+body.presentation .nameBox{height:280px}
+body.presentation .wheelViewport{height:280px}
+body.presentation .wheelItem{height:100px;font-size:clamp(62px,7.5vw,118px)}
+@media(max-width:980px){
+  .app{grid-template-columns:1fr}
+  .panel{max-height:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="panel">
+    <div class="brand">
+      <img class="logo" src="assets/sycac-logo.png" alt="SYCAC">
+      <div>
+        <h1>نظام السحب المباشر</h1>
+        <small>SYCAC Canlı Çekiliş Sistemi</small>
+      </div>
+    </div>
+    <div class="colorbar"></div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <div class="stepNo">1</div>
+        <div class="sectionTitle">
+          <h2>تحميل ملف Kobo</h2>
+          <div class="tr">Kobo CSV dosyasını yükle</div>
+        </div>
+      </div>
+      <div class="help">
+        <div class="bi">
+          <div class="ar">ارفع ملف CSV الصادر من Kobo. سيقرأ النظام الأعمدة والفاصل تلقائياً.</div>
+          <div class="tr">Kobo’dan indirilen CSV dosyasını yükleyin. Sistem sütunları ve ayırıcıyı otomatik okur.</div>
+        </div>
+      </div>
+      <label>ملف CSV <span class="tr">CSV dosyası</span></label>
+      <input id="csvFile" type="file" accept=".csv,text/csv">
+      <div id="fileStatus" class="help" style="margin-top:10px">
+        <div class="bi">
+          <div class="ar">لم يتم تحميل ملف بعد.</div>
+          <div class="tr">Henüz dosya yüklenmedi.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <div class="stepNo">2</div>
+        <div class="sectionTitle">
+          <h2>مراجعة الأعمدة</h2>
+          <div class="tr">Sütunları kontrol et</div>
+        </div>
+      </div>
+
+      <label>عمود الاسم <span class="tr">İsim sütunu</span></label>
+      <select id="nameCol"></select>
+
+      <label>عمود الهاتف / المعرّف <span class="tr">Telefon / kimlik sütunu</span></label>
+      <select id="idCol"></select>
+
+      <div class="row">
+        <div>
+          <label>إزالة التكرار حسب <span class="tr">Tekrarı buna göre kaldır</span></label>
+          <select id="dedupeMode">
+            <option value="id">الهاتف / Telefon</option>
+            <option value="name">الاسم / İsim</option>
+            <option value="none">بدون / Yok</option>
+          </select>
+        </div>
+        <div>
+          <label>مدة السحب <span class="tr">Çekiliş süresi</span></label>
+          <input id="drawSeconds" type="number" value="7" min="3" max="20">
+        </div>
+      </div>
+
+      <div class="btns">
+        <button class="green" id="prepareBtn" disabled>تجهيز القائمة / Listeyi hazırla</button>
+      </div>
+
+      <div class="preview" id="previewBox" style="display:none"></div>
+    </div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <div class="stepNo">3</div>
+        <div class="sectionTitle">
+          <h2>إحصاءات القائمة</h2>
+          <div class="tr">Liste istatistikleri</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="rawCount">0</b><span>إجمالي التسجيلات<br>Toplam kayıt</span></div>
+        <div class="stat"><b id="eligibleCount">0</b><span>مؤهل بعد التنظيف<br>Uygun kayıt</span></div>
+        <div class="stat"><b id="duplicateCount">0</b><span>تكرارات مستبعدة<br>Çıkarılan tekrar</span></div>
+        <div class="stat"><b id="winnerCount">0</b><span>فائز مؤكد<br>Onaylı kazanan</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <div class="stepNo">4</div>
+        <div class="sectionTitle">
+          <h2>التشغيل والتصدير</h2>
+          <div class="tr">Çalıştırma ve dışa aktarma</div>
+        </div>
+      </div>
+      <div class="btns">
+        <button class="purple" id="presentationBtn">الشاشة الكبيرة / Büyük ekran</button>
+        <button class="ghost" id="exportWinnersBtn">تصدير الفائزين CSV / Kazananları indir</button>
+        <button class="ghost" id="exportAuditBtn">تقرير التدقيق JSON / Denetim raporu</button>
+        <button class="red" id="resetBtn">مسح الفائزين / Kazananları sıfırla</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <div class="stepNo">★</div>
+        <div class="sectionTitle">
+          <h2>الفائزون</h2>
+          <div class="tr">Kazananlar</div>
+        </div>
+      </div>
+      <div id="winnersList" class="winnersList"></div>
+    </div>
+  </aside>
+
+  <main class="stage" id="stage">
+    <div class="stageTop">
+      <div class="stageBrand">
+        <img src="assets/sycac-logo.png" alt="SYCAC">
+        <div class="stageTitle">
+  <h1>سحب زوار معرض رائدات الأعمال</h1>
+  <p class="trTitle">Kadın Girişimciler Fuarı Canlı Çekilişi</p>
+</div>
+      </div>
+      <div class="badge" id="stageStatus">بانتظار الملف</div>
+    </div>
+
+    <div class="stageMiddle">
+      <div class="drawLabel" id="drawLabel">
+        <div>حمّل ملف Kobo ثم جهّز القائمة</div>
+        <div class="tr">Kobo dosyasını yükleyin ve listeyi hazırlayın</div>
+      </div>
+
+      <div class="wheelArea">
+        <div class="nameBox" id="nameBox">
+          <div class="wheelViewport" id="wheelViewport">
+            <div class="wheelStrip" id="wheelStrip">
+              <div class="wheelItem focus">SYCAC</div>
+            </div>
+          </div>
+          <div class="winnerName" id="winnerName">SYCAC</div>
+        </div>
+      </div>
+
+      <div class="subInfo" id="subInfo">Sistem hazır / النظام جاهز</div>
+      <div class="progressWrap"><div class="progressBar" id="progressBar"></div></div>
+
+      <div class="stageControls">
+        <button class="primary" id="spinBtn" disabled>بدء السحب<br><span class="tr">Çekilişi başlat</span></button>
+        <button class="dark" id="confirmBtn" disabled>تأكيد الفائز<br><span class="tr">Kazananı onayla</span></button>
+      </div>
+    </div>
+
+    <div class="stageBottom">
+      <div class="footerStat"><b id="stageEligible">0</b><span>مشارك مؤهل<br>Uygun katılımcı</span></div>
+      <div class="footerStat"><b id="stageRemaining">0</b><span>متبقٍ في السحب<br>Kalan katılımcı</span></div>
+      <div class="footerStat"><b id="stageWinners">0</b><span>فائز مؤكد<br>Onaylı kazanan</span></div>
+    </div>
+  </main>
+</div>
+
+<script>
+const STORAGE_KEY = 'sycac_live_draw_final_bilingual_v3';
+const COLORS = ['#3a66ae','#66358e','#f04b38','#0f6e3a','#454244'];
+let rawRows = [];
+let headers = [];
+let participants = [];
+let winners = [];
+let currentCandidate = null;
+let spinning = false;
+let auditLog = [];
+let duplicateCount = 0;
+let currentFileName = '';
+let animationFrame = null;
+let lastTick = 0;
+let wheelOffset = 0;
+let wheelItems = [];
+let finalWheelOffset = 0;
+let spinStartOffset = 0;
+let plannedWinnerIndex = -1;
+const WHEEL_ITEM_HEIGHT = 86;
+const WHEEL_TOP_PADDING = 72;
+
+const $ = id => document.getElementById(id);
+
+function normalizeText(v){ return String(v ?? '').trim().replace(/\s+/g,' '); }
+function normalizeId(v){ return String(v ?? '').replace(/[^\dA-Za-z\u0600-\u06FF]/g,'').toLowerCase(); }
+function escapeHtml(s){ return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+function escapeCsv(value){
+  const s = String(value ?? '');
+  return /[",;\n\r]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+}
+function downloadText(filename, content, type='text/plain;charset=utf-8'){
+  const blob = new Blob([content], {type});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+}
+function guessDelimiter(text){
+  const sample = text.slice(0, 5000);
+  let comma = 0, semi = 0, tab = 0, inQuotes = false;
+  for(let i=0;i<sample.length;i++){
+    const c=sample[i], n=sample[i+1];
+    if(c === '"' && n === '"'){ i++; continue; }
+    if(c === '"'){ inQuotes = !inQuotes; continue; }
+    if(!inQuotes){
+      if(c === ',') comma++;
+      else if(c === ';') semi++;
+      else if(c === '\t') tab++;
+    }
+  }
+  if(tab > comma && tab > semi) return '\t';
+  return semi > comma ? ';' : ',';
+}
+function parseCSV(text){
+  const delimiter = guessDelimiter(text);
+  const rows = [];
+  let row = [], val = '', inQuotes = false;
+  text = text.replace(/^\uFEFF/, '');
+  for(let i=0;i<text.length;i++){
+    const c = text[i], n = text[i+1];
+    if(inQuotes){
+      if(c === '"' && n === '"'){ val += '"'; i++; }
+      else if(c === '"'){ inQuotes = false; }
+      else val += c;
+    }else{
+      if(c === '"') inQuotes = true;
+      else if(c === delimiter){ row.push(val); val = ''; }
+      else if(c === '\n'){ row.push(val); rows.push(row); row=[]; val=''; }
+      else if(c === '\r'){}
+      else val += c;
+    }
+  }
+  row.push(val);
+  if(row.some(x => String(x).trim() !== '')) rows.push(row);
+  if(rows.length === 0) return {headers:[], data:[], delimiter};
+  const h = rows[0].map((x, i) => normalizeText(x) || `col_${i+1}`);
+  const data = rows.slice(1).map(r => {
+    const obj = {};
+    h.forEach((key, idx) => obj[key] = r[idx] ?? '');
+    return obj;
+  });
+  return {headers:h, data, delimiter};
+}
+function columnScore(header, type){
+  const h = header.toLowerCase().trim();
+  const exactName = ['full_name','name','visitor_name','ad soyad','isim soyisim','الاسم','الاسم الكامل','اسم الزائر'];
+  const exactId = ['phone','telefon numarası','telefon','رقم الهاتف','رقم الموبايل','mobile','id','_id','_uuid','uuid'];
+  const containsName = ['full_name','name','ad soyad','soyad','الاسم','اسم'];
+  const containsId = ['phone','telefon','رقم','mobile','uuid','_id','id'];
+  if(type === 'name'){
+    if(exactName.includes(h)) return 100;
+    if(containsName.some(x => h.includes(x))) return 70;
+    if(h.includes('intro') || h.includes('welcome') || h.length > 80) return -50;
+  }
+  if(type === 'id'){
+    if(exactId.includes(h)) return 100;
+    if(containsId.some(x => h.includes(x))) return 70;
+    if(h.includes('submission') || h.includes('status') || h.includes('notes')) return -20;
+  }
+  return 0;
+}
+function detectColumn(type){
+  let best = headers[0] || '';
+  let score = -999;
+  for(const h of headers){
+    const s = columnScore(h, type);
+    if(s > score){ score = s; best = h; }
+  }
+  return best;
+}
+function fillSelect(select, selected){
+  select.innerHTML = '';
+  headers.forEach(h => {
+    const opt = document.createElement('option');
+    opt.value = h;
+    opt.textContent = h.length > 70 ? h.slice(0,70) + '…' : h;
+    if(h === selected) opt.selected = true;
+    select.appendChild(opt);
+  });
+}
+function renderPreview(){
+  if(!headers.length || !rawRows.length){ $('previewBox').style.display = 'none'; return; }
+  const rows = rawRows.slice(0,5);
+  const shownHeaders = headers.slice(0,8);
+  let html = '<table><thead><tr>' + shownHeaders.map(h=>`<th>${escapeHtml(h)}</th>`).join('') + '</tr></thead><tbody>';
+  rows.forEach(r=>{
+    html += '<tr>' + shownHeaders.map(h=>`<td>${escapeHtml(String(r[h] ?? '').slice(0,80))}</td>`).join('') + '</tr>';
+  });
+  html += '</tbody></table>';
+  $('previewBox').innerHTML = html;
+  $('previewBox').style.display = 'block';
+}
+function updateStats(){
+  const remaining = getRemainingParticipants().length;
+  $('rawCount').textContent = rawRows.length;
+  $('eligibleCount').textContent = participants.length;
+  $('duplicateCount').textContent = duplicateCount;
+  $('winnerCount').textContent = winners.length;
+  $('stageEligible').textContent = participants.length;
+  $('stageRemaining').textContent = remaining;
+  $('stageWinners').textContent = winners.length;
+}
+function updateWinnersList(){
+  const box = $('winnersList');
+  box.innerHTML = '';
+  if(winners.length === 0){
+    box.innerHTML = '<div class="help"><div class="bi"><div class="ar">لا يوجد فائزون بعد.</div><div class="tr">Henüz kazanan yok.</div></div></div>';
+    return;
+  }
+  winners.forEach((w, i)=>{
+    const div = document.createElement('div');
+    div.className = 'winnerItem';
+    div.innerHTML = `<div><b>${escapeHtml(w.name)}</b><div class="meta">${escapeHtml(w.id || '')}</div></div><div class="no">#${i+1}</div>`;
+    box.appendChild(div);
+  });
+}
+function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify({winners, auditLog})); }
+function loadState(){
+  try{
+    const s = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    winners = Array.isArray(s.winners) ? s.winners : [];
+    auditLog = Array.isArray(s.auditLog) ? s.auditLog : [];
+  }catch(e){ winners = []; auditLog = []; }
+}
+function getRemainingParticipants(){
+  const won = new Set(winners.map(w => w.key));
+  return participants.filter(p => !won.has(p.key));
+}
+function secureRandomIndex(n){
+  if(n <= 0) return -1;
+  const max = 0x100000000;
+  const limit = max - (max % n);
+  const arr = new Uint32Array(1);
+  let x;
+  do{
+    crypto.getRandomValues(arr);
+    x = arr[0];
+  }while(x >= limit);
+  return x % n;
+}
+function randomParticipant(list){
+  if(!list.length) return null;
+  return list[secureRandomIndex(list.length)];
+}
+function shuffleCopy(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = secureRandomIndex(i+1);
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function showStageStatus(text){ $('stageStatus').textContent = text; }
+function setDrawLabel(ar, tr){
+  $('drawLabel').innerHTML = `<div>${escapeHtml(ar)}</div><div class="tr">${escapeHtml(tr)}</div>`;
+}
+function displayName(p, rolling=false){
+  if(!rolling && p){
+    centerWheelOnParticipant(p);
+  }else if(!p){
+    $('wheelStrip').innerHTML = '<div class="wheelItem focus">SYCAC</div>';
+    wheelItems = [{name:'SYCAC'}];
+    wheelOffset = 0;
+    $('wheelStrip').style.transform = `translateY(${-wheelOffset}px)`;
+  }
+  $('subInfo').textContent = p ? (rolling ? 'جاري السحب... / Çekiliş sürüyor...' : (p.id ? `ID: ${p.id}` : '')) : 'Sistem hazır / النظام جاهز';
+}
+function buildRoulette(list){
+  const remaining = list && list.length ? list : getRemainingParticipants();
+
+  if(!remaining.length){
+    wheelItems = [{name:'SYCAC'}];
+    $('wheelStrip').innerHTML = '<div class="wheelItem focus">SYCAC</div>';
+    wheelOffset = 0;
+    $('wheelStrip').style.transform = `translateY(${-wheelOffset}px)`;
+    return;
+  }
+
+  const poolSize = Math.min(80, remaining.length);
+  const pool = shuffleCopy(remaining).slice(0, poolSize);
+  wheelItems = [];
+  for(let r=0; r<8; r++){
+    wheelItems.push(...shuffleCopy(pool));
+  }
+
+  $('wheelStrip').innerHTML = wheelItems.map((p, i) =>
+    `<div class="wheelItem${i === 0 ? ' focus' : ''}">${escapeHtml(p.name)}</div>`
+  ).join('');
+
+  wheelOffset = 0;
+  $('wheelStrip').style.transform = `translateY(${-wheelOffset}px)`;
+}
+
+function setWheelFocusByOffset(){
+  const all = document.querySelectorAll('.wheelItem');
+  if(!all.length) return;
+  const viewportCenter = ($('nameBox').clientHeight / 2);
+  const focusedIndex = Math.round((wheelOffset + viewportCenter - WHEEL_TOP_PADDING - (WHEEL_ITEM_HEIGHT / 2)) / WHEEL_ITEM_HEIGHT);
+  all.forEach((el, i) => el.classList.toggle('focus', i === focusedIndex));
+}
+
+function updateWheel(speed){
+  const el = $('wheelStrip');
+  if(!wheelItems.length) return;
+
+  wheelOffset += speed;
+
+  const maxOffset = Math.max(WHEEL_ITEM_HEIGHT, (wheelItems.length - 4) * WHEEL_ITEM_HEIGHT);
+  if(wheelOffset > maxOffset){
+    wheelOffset = wheelOffset % (Math.max(1, wheelItems.length / 2) * WHEEL_ITEM_HEIGHT);
+  }
+
+  el.style.transform = `translateY(${-wheelOffset}px)`;
+  setWheelFocusByOffset();
+}
+
+function offsetForIndex(index){
+  const viewportCenter = ($('nameBox').clientHeight / 2);
+  return index * WHEEL_ITEM_HEIGHT + WHEEL_TOP_PADDING - viewportCenter + (WHEEL_ITEM_HEIGHT / 2);
+}
+
+function renderWheelItems(focusIndex = -1){
+  $('wheelStrip').innerHTML = wheelItems.map((p, i) =>
+    `<div class="wheelItem${i === focusIndex ? ' focus' : ''}">${escapeHtml(p.name)}</div>`
+  ).join('');
+}
+
+function buildPlannedSpinWheel(remaining, winner){
+  const el = $('wheelStrip');
+
+  // نبني مساراً طويلاً عشوائياً، والفائز يكون في النهاية ليقف عليه الدولاب طبيعياً.
+  const rounds = Math.max(5, Math.ceil(90 / Math.max(1, remaining.length)));
+  const sequence = [];
+
+  for(let r=0; r<rounds; r++){
+    sequence.push(...shuffleCopy(remaining));
+  }
+
+  // نضيف أسماء عشوائية قبل الفائز لزيادة التشويق، ثم الفائز، ثم أسماء قليلة بعده لا تظهر عند التوقف.
+  sequence.push(...shuffleCopy(remaining).slice(0, Math.min(14, remaining.length)));
+  plannedWinnerIndex = sequence.length;
+  sequence.push(winner);
+  sequence.push(...shuffleCopy(remaining).slice(0, Math.min(8, remaining.length)));
+
+  wheelItems = sequence;
+  renderWheelItems(-1);
+
+  spinStartOffset = 0;
+  finalWheelOffset = offsetForIndex(plannedWinnerIndex);
+  wheelOffset = spinStartOffset;
+
+  el.style.transition = '';
+  el.style.transform = `translateY(${-wheelOffset}px)`;
+  setWheelFocusByOffset();
+}
+
+function centerWheelOnParticipant(participant){
+  if(!participant) return;
+  const el = $('wheelStrip');
+
+  // لا نعيد بناء الدولاب هنا إذا كان الفائز موجوداً أصلاً في المسار المخطط.
+  if(plannedWinnerIndex >= 0 && wheelItems[plannedWinnerIndex] && wheelItems[plannedWinnerIndex].key === participant.key){
+    wheelOffset = finalWheelOffset;
+    el.style.transition = '';
+    el.style.transform = `translateY(${-wheelOffset}px)`;
+    setWheelFocusByOffset();
+    return;
+  }
+
+  const remaining = getRemainingParticipants();
+  const before = shuffleCopy(remaining).slice(0, 10);
+  const after = shuffleCopy(remaining).slice(0, 10);
+  wheelItems = [...before, participant, ...after];
+  const focusIndex = before.length;
+  renderWheelItems(focusIndex);
+
+  wheelOffset = offsetForIndex(focusIndex);
+  el.style.transition = 'transform 850ms cubic-bezier(.12,.72,.18,1)';
+  el.style.transform = `translateY(${-wheelOffset}px)`;
+
+  setTimeout(() => {
+    el.style.transition = '';
+    setWheelFocusByOffset();
+  }, 900);
+}
+function confetti(){
+  for(let i=0;i<130;i++){
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    el.style.left = Math.random()*100 + 'vw';
+    el.style.background = COLORS[i % COLORS.length];
+    el.style.animationDelay = (Math.random()*0.5)+'s';
+    el.style.transform = `rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), 3500);
+  }
+}
+async function loadCSVText(text, filename=''){
+  const parsed = parseCSV(text);
+  headers = parsed.headers;
+  rawRows = parsed.data;
+  currentFileName = filename;
+  participants = [];
+  duplicateCount = 0;
+  if(headers.length === 0 || rawRows.length === 0){
+    alert('لم يتم العثور على بيانات. / Veri bulunamadı.');
+    return;
+  }
+  const nameGuess = detectColumn('name');
+  const idGuess = detectColumn('id');
+  fillSelect($('nameCol'), nameGuess);
+  fillSelect($('idCol'), idGuess);
+  $('prepareBtn').disabled = false;
+  $('fileStatus').className = 'help success';
+  $('fileStatus').innerHTML = `<div class="bi"><div class="ar">تم تحميل الملف: <b>${escapeHtml(filename || 'CSV')}</b><br>عدد التسجيلات: <b>${rawRows.length}</b> — الفاصل المكتشف: <b>${parsed.delimiter === '\t' ? 'Tab' : parsed.delimiter}</b></div><div class="tr">Dosya yüklendi: <b>${escapeHtml(filename || 'CSV')}</b><br>Kayıt sayısı: <b>${rawRows.length}</b> — Ayraç: <b>${parsed.delimiter === '\t' ? 'Tab' : parsed.delimiter}</b></div></div>`;
+  setDrawLabel('تم قراءة الملف. راجع الأعمدة ثم جهّز القائمة.', 'Dosya okundu. Sütunları kontrol edip listeyi hazırlayın.');
+  $('subInfo').textContent = `Loaded / تم التحميل: ${rawRows.length}`;
+  showStageStatus('تم قراءة الملف');
+  renderPreview();
+  updateStats();
+}
+function prepareParticipants(){
+  const nameCol = $('nameCol').value;
+  const idCol = $('idCol').value;
+  const dedupeMode = $('dedupeMode').value;
+  const seen = new Set();
+  const list = [];
+  duplicateCount = 0;
+  rawRows.forEach((row, idx)=>{
+    const name = normalizeText(row[nameCol]);
+    if(!name) return;
+    const id = normalizeText(row[idCol]);
+    let key;
+    if(dedupeMode === 'id' && id) key = 'id:' + normalizeId(id);
+    else if(dedupeMode === 'name') key = 'name:' + normalizeText(name).toLowerCase();
+    else key = 'row:' + idx + ':' + normalizeText(name).toLowerCase();
+    if(seen.has(key)){ duplicateCount++; return; }
+    seen.add(key);
+    list.push({name, id, key, rowIndex: idx + 2, original: row});
+  });
+  participants = list;
+  currentCandidate = null;
+  $('spinBtn').disabled = participants.length === 0;
+  $('confirmBtn').disabled = true;
+  if(participants.length) setDrawLabel('القائمة جاهزة. اضغط بدء السحب.', 'Liste hazır. Çekilişi başlatın.');
+  else setDrawLabel('لا يوجد مشاركون مؤهلون.', 'Uygun katılımcı yok.');
+  displayName(null);
+  $('subInfo').textContent = participants.length ? `${participants.length} participant ready / ${participants.length} مشارك جاهز` : 'No data / لا توجد بيانات';
+  showStageStatus('القائمة جاهزة');
+  buildRoulette(participants);
+  auditLog.push({
+    type:'prepare',
+    time:new Date().toISOString(),
+    fileName:currentFileName,
+    rawRows:rawRows.length,
+    eligible:participants.length,
+    duplicates:duplicateCount,
+    nameCol,
+    idCol,
+    dedupeMode
+  });
+  saveState();
+  updateStats();
+  updateWinnersList();
+}
+function easeOutCubic(x){ return 1 - Math.pow(1 - x, 3); }
+function startSpin(){
+  const remaining = getRemainingParticipants();
+  if(remaining.length === 0){ alert('لا يوجد مشاركون متبقون. / Kalan katılımcı yok.'); return; }
+
+  const duration = Math.max(3, Math.min(20, Number($('drawSeconds').value || 7))) * 1000;
+
+  // الفائز يُختار عشوائياً هنا، ثم يتحرك الدولاب تدريجياً حتى يتوقف عليه بدون قفزة.
+  currentCandidate = randomParticipant(remaining);
+  buildPlannedSpinWheel(remaining, currentCandidate);
+
+  spinning = true;
+  document.body.classList.add('spinning');
+  $('progressBar').style.width = '0%';
+  $('spinBtn').disabled = true;
+  $('confirmBtn').disabled = true;
+  setDrawLabel('جاري السحب...', 'Çekiliş sürüyor...');
+  showStageStatus('جاري السحب');
+  $('subInfo').textContent = 'جاري السحب... / Çekiliş sürüyor...';
+
+  const start = performance.now();
+
+  function animate(now){
+    const elapsed = now - start;
+    const t = Math.min(1, elapsed / duration);
+    const eased = easeOutCubic(t);
+
+    // حركة واحدة مستمرة من بداية المسار حتى الفائز.
+    wheelOffset = spinStartOffset + (finalWheelOffset - spinStartOffset) * eased;
+
+    $('progressBar').style.width = (t * 100).toFixed(1) + '%';
+    $('wheelStrip').style.transform = `translateY(${-wheelOffset}px)`;
+    setWheelFocusByOffset();
+
+    if(t < 1){
+      animationFrame = requestAnimationFrame(animate);
+    }else{
+      spinning = false;
+      document.body.classList.remove('spinning');
+      animationFrame = null;
+
+      wheelOffset = finalWheelOffset;
+      $('wheelStrip').style.transform = `translateY(${-wheelOffset}px)`;
+      setWheelFocusByOffset();
+
+      displayName(currentCandidate, false);
+      setDrawLabel('الفائز المختار', 'Seçilen kazanan');
+      showStageStatus('بانتظار التأكيد');
+      $('confirmBtn').disabled = false;
+      confetti();
+    }
+  }
+
+  animationFrame = requestAnimationFrame(animate);
+}
+function confirmWinner(){
+  if(!currentCandidate) return;
+  const record = {
+    drawNo:winners.length + 1,
+    name:currentCandidate.name,
+    id:currentCandidate.id,
+    key:currentCandidate.key,
+    rowIndex:currentCandidate.rowIndex,
+    time:new Date().toISOString()
+  };
+  winners.push(record);
+  auditLog.push({
+    type:'winner_confirmed',
+    record,
+    remainingAfterConfirm:getRemainingParticipants().length - 1,
+    userAgent:navigator.userAgent,
+    timestamp:new Date().toISOString()
+  });
+  saveState();
+  currentCandidate = null;
+  $('confirmBtn').disabled = true;
+  $('spinBtn').disabled = getRemainingParticipants().length === 0;
+  setDrawLabel('تم تأكيد الفائز', 'Kazanan onaylandı');
+  showStageStatus('تم التأكيد');
+  buildRoulette(getRemainingParticipants());
+  updateStats();
+  updateWinnersList();
+}
+function exportWinners(){
+  const rows = [['draw_no','name','id','row_index','time']];
+  winners.forEach(w => rows.push([w.drawNo,w.name,w.id,w.rowIndex,w.time]));
+  downloadText('sycac-winners.csv', rows.map(r=>r.map(escapeCsv).join(',')).join('\n'), 'text/csv;charset=utf-8');
+}
+function exportAudit(){
+  const data = {
+    exportedAt:new Date().toISOString(),
+    fileName:currentFileName,
+    totalRows:rawRows.length,
+    eligibleParticipants:participants.length,
+    duplicateCount,
+    remaining:getRemainingParticipants().length,
+    winners,
+    auditLog,
+    drawMode:'auto_stop_gradual_roulette',
+    randomMethod:'crypto.getRandomValues'
+  };
+  downloadText('sycac-draw-audit.json', JSON.stringify(data,null,2), 'application/json;charset=utf-8');
+}
+function resetWinners(){
+  if(!confirm('سيتم حذف قائمة الفائزين. هل أنت متأكد؟\nKazanan listesi silinecek. Emin misiniz?')) return;
+  winners = [];
+  auditLog.push({type:'reset_winners',timestamp:new Date().toISOString()});
+  saveState();
+  currentCandidate = null;
+  $('spinBtn').disabled = participants.length === 0;
+  $('confirmBtn').disabled = true;
+  updateStats();
+  updateWinnersList();
+  displayName(null);
+  buildRoulette(getRemainingParticipants());
+  showStageStatus('تمت إعادة التهيئة');
+}
+function togglePresentation(){
+  document.body.classList.toggle('presentation');
+  if(document.body.classList.contains('presentation')){
+    document.documentElement.requestFullscreen?.().catch(()=>{});
+  }else{
+    document.exitFullscreen?.().catch(()=>{});
+  }
+}
+
+$('csvFile').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const text = await file.text();
+  await loadCSVText(text, file.name);
+});
+$('prepareBtn').addEventListener('click', prepareParticipants);
+$('spinBtn').addEventListener('click', startSpin);
+$('confirmBtn').addEventListener('click', confirmWinner);
+$('exportWinnersBtn').addEventListener('click', exportWinners);
+$('exportAuditBtn').addEventListener('click', exportAudit);
+$('resetBtn').addEventListener('click', resetWinners);
+$('presentationBtn').addEventListener('click', togglePresentation);
+
+loadState();
+updateStats();
+updateWinnersList();
+buildRoulette([]);
+</script>
+</body>
+</html>
