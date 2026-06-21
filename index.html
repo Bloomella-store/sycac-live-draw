@@ -791,14 +791,19 @@ function showStageStatus(text){ $('stageStatus').textContent = text; }
 function setDrawLabel(ar, tr){
   $('drawLabel').innerHTML = `<div>${escapeHtml(ar)}</div><div class="tr">${escapeHtml(tr)}</div>`;
 }
+function clearWinnerDisplay(){
+  plannedWinnerIndex = -1;
+  wheelItems = [{name:''}];
+  wheelOffset = 0;
+  $('wheelStrip').innerHTML = '<div class="wheelItem focus">&nbsp;</div>';
+  $('wheelStrip').style.transition = '';
+  $('wheelStrip').style.transform = `translateY(${-wheelOffset}px)`;
+}
 function displayName(p, rolling=false){
   if(!rolling && p){
     centerWheelOnParticipant(p);
   }else if(!p){
-    $('wheelStrip').innerHTML = '<div class="wheelItem focus">SYCAC</div>';
-    wheelItems = [{name:'SYCAC'}];
-    wheelOffset = 0;
-    $('wheelStrip').style.transform = `translateY(${-wheelOffset}px)`;
+    clearWinnerDisplay();
   }
   $('subInfo').textContent = p ? (rolling ? 'جاري السحب... / Çekiliş sürüyor...' : (p.id ? `ID: ${p.id}` : '')) : 'Sistem hazır / النظام جاهز';
 }
@@ -806,10 +811,7 @@ function buildRoulette(list){
   const remaining = list && list.length ? list : getRemainingParticipants();
 
   if(!remaining.length){
-    wheelItems = [{name:'SYCAC'}];
-    $('wheelStrip').innerHTML = '<div class="wheelItem focus">SYCAC</div>';
-    wheelOffset = 0;
-    $('wheelStrip').style.transform = `translateY(${-wheelOffset}px)`;
+    clearWinnerDisplay();
     return;
   }
 
@@ -951,6 +953,9 @@ async function loadCSVText(text, filename=''){
   $('fileStatus').className = 'help success';
   $('fileStatus').innerHTML = `<div class="bi"><div class="ar">تم تحميل الملف: <b>${escapeHtml(filename || 'CSV')}</b><br>عدد التسجيلات: <b>${rawRows.length}</b> — الفاصل المكتشف: <b>${parsed.delimiter === '\t' ? 'Tab' : parsed.delimiter}</b></div><div class="tr">Dosya yüklendi: <b>${escapeHtml(filename || 'CSV')}</b><br>Kayıt sayısı: <b>${rawRows.length}</b> — Ayraç: <b>${parsed.delimiter === '\t' ? 'Tab' : parsed.delimiter}</b></div></div>`;
   setDrawLabel('تم قراءة الملف. راجع الأعمدة ثم جهّز القائمة.', 'Dosya okundu. Sütunları kontrol edip listeyi hazırlayın.');
+  currentCandidate = null;
+  $('confirmBtn').disabled = true;
+  clearWinnerDisplay();
   $('subInfo').textContent = `Loaded / تم التحميل: ${rawRows.length}`;
   showStageStatus('تم قراءة الملف');
   renderPreview();
@@ -984,7 +989,7 @@ function prepareParticipants(){
   displayName(null);
   $('subInfo').textContent = participants.length ? `${participants.length} participant ready / ${participants.length} مشارك جاهز` : 'No data / لا توجد بيانات';
   showStageStatus('القائمة جاهزة');
-  buildRoulette(participants);
+  clearWinnerDisplay();
   auditLog.push({
     type:'prepare',
     time:new Date().toISOString(),
@@ -1079,7 +1084,8 @@ function confirmWinner(){
   $('spinBtn').disabled = getRemainingParticipants().length === 0;
   setDrawLabel('تم تأكيد الفائز', 'Kazanan onaylandı');
   showStageStatus('تم التأكيد');
-  buildRoulette(getRemainingParticipants());
+  clearWinnerDisplay();
+  $('subInfo').textContent = 'اضغط بدء السحب لاختيار فائز جديد / Yeni kazanan için çekilişi başlatın';
   updateStats();
   updateWinnersList();
 }
@@ -1114,7 +1120,7 @@ function resetWinners(){
   updateStats();
   updateWinnersList();
   displayName(null);
-  buildRoulette(getRemainingParticipants());
+  clearWinnerDisplay();
   showStageStatus('تمت إعادة التهيئة');
 }
 function togglePresentation(){
@@ -1143,7 +1149,7 @@ $('presentationBtn').addEventListener('click', togglePresentation);
 loadState();
 updateStats();
 updateWinnersList();
-buildRoulette([]);
+clearWinnerDisplay();
 </script>
 </body>
 </html>
